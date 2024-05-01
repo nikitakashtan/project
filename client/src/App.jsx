@@ -2,6 +2,7 @@ import React from 'react'
 import MainPage from "./components/pages/MainPage"
 import Layout from './Layout';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import NewCandidate from './components/pages/NewCandidate';
 function App() {
  
 
@@ -14,6 +15,10 @@ function App() {
           path: "/",
           element: <MainPage />
         },
+        {
+          path: "/new-candidate",
+          element: <NewCandidate />
+        }
         // {
         //   element: <ProtectedRoute isAllowed={!user} />,
         //   children: [

@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 export default function NewCandidate() {
+  const [stages, setStages] = useState([]);
+  useEffect(() => {
+    axios()
+  })
+
   return (
     <Form className='w-50 p-3' style={{ margin: '0 auto', position: 'relative' }}>
       <Form.Group className="mb-3" controlId="formBasicName">
