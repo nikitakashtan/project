@@ -4,6 +4,7 @@ const morgan = require('morgan');
 // const authRouter = require('./router/authRouter');
 // const tokensRouter = require('./router/tokensRouter');
 // const postsRouter = require('./router/postsRouter');
+const stagesRouter = require('./routes/stagesRouter');
 
 const app = express();
 
