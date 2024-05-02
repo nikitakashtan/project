@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion'; // Импортируем AnimatePresence
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import FullInformationCard from './FullInformationCard';
@@ -22,12 +23,8 @@ export default function OneCandidatePage({ candidate }) {
     transform: 'translateX(-50%)',
   };
 
-  const handleShowFullInfo = () => {
-    setShowFullInfo(true);
-  };
-
-  const handleCloseFullInfo = () => {
-    setShowFullInfo(false);
+  const handleToggleFullInfo = () => {
+    setShowFullInfo(!showFullInfo);
   };
 
   return (
@@ -39,11 +36,29 @@ export default function OneCandidatePage({ candidate }) {
             <Card.Text>Email: {candidate.email}</Card.Text>
             <Card.Text>Телефон: {candidate.phone}</Card.Text>
             <Card.Text>Опыт работы: {candidate.experience}</Card.Text>
-            <Button variant="dark" style={buttonStyle} onClick={handleShowFullInfo}>Подробная информация</Button>
+              <Button 
+                variant="dark" 
+                style={buttonStyle} 
+                onClick={handleToggleFullInfo}
+              >
+                {showFullInfo ? "Скрыть информацию" : "Подробная информация"}
+              </Button>
+
           </Card.Body>
         </Card>
       </div>
-      {showFullInfo && <FullInformationCard candidate={candidate} onClose={handleCloseFullInfo} />}
+      <AnimatePresence>
+        {showFullInfo && ( // Добавляем AnimatePresence
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }} 
+            animate={{ opacity: 1, scale: 1 }} 
+            exit={{ opacity: 0, scale: 0.8 }} 
+            transition={{ duration: 0.3 }} 
+          >
+            <FullInformationCard candidate={candidate} onClose={() => setShowFullInfo(false)} />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
