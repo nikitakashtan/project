@@ -12,6 +12,8 @@ export default function NewCandidatePage() {
     });
   }, []);
 
+
+
   return (
     <Row>
       {candidates.map((candidate) => {

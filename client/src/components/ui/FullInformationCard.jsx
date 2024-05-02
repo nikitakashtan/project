@@ -21,10 +21,10 @@ export default function FullInformationCard({ candidate, onClose }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.8 }} // Начальные стили (невидимость и уменьшение масштаба)
-      animate={{ opacity: 1, scale: 1 }} // Стили при анимации (плавное появление и возврат к нормальному масштабу)
-      exit={{ opacity: 0, scale: 0.8 }} // Стили при исчезновении (плавное исчезновение и уменьшение масштаба)
-      transition={{ duration: 0.3 }} // Длительность анимации
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.8 }}
+      transition={{ duration: 0.3 }} 
     >
       <Card style={cardStyle} className="bg-dark text-white">
         <Card.Img src="https://catherineasquithgallery.com/uploads/posts/2021-02/1614408020_23-p-biznes-fon-temnii-31.jpg" alt="Card image" style={imageStyle}/>
