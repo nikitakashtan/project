@@ -4,7 +4,8 @@ const cookieParser = require('cookie-parser');
 const authRouter = require('./router/authRouter');
 const tokensRouter = require('./router/tokensRouter');
 const stagesRouter = require('./router/stagesRouter');
-const candidatesRouter = require('./router/candidatesRouter')
+const candidatesRouter = require('./router/candidatesRouter');
+const mailRouter = require('./router/mailRouter');
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use('/api/tokens', tokensRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/stages', stagesRouter);
-app.use('/api/candidates', candidatesRouter)
+app.use('/api/candidates', candidatesRouter);
+app.use('/api/sendmail', mailRouter);
 
 module.exports = app;
