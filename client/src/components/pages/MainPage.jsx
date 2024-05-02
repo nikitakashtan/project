@@ -15,16 +15,9 @@ export default function HomePage() {
   return (
     <Row>
       {candidates.map((candidate) => (
-        
           <Row>
-          
               <OneCandidatePage candidate={candidate} />
-      
-       
-              {/* <FullInformationCard candidate={candidate} /> */}
-    
           </Row>
- 
       ))}
     </Row>
   );
