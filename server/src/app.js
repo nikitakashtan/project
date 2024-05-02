@@ -12,6 +12,7 @@ app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(express.json());
 
+
 app.use('/api/tokens', tokensRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/stages', stagesRouter);
