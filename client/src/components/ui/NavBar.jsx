@@ -6,7 +6,6 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { Link } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 
 export default function NavBar({ user, logoutHandler }) {
     return (
@@ -40,7 +39,7 @@ export default function NavBar({ user, logoutHandler }) {
                   </Offcanvas.Header>
                   <Offcanvas.Body>
                     <Nav className="justify-content-end flex-grow-1 pe-3">
-                      <Nav.Link as={Link} to="/">Новые</Nav.Link>
+                      <Nav.Link as={Link} to="/new">Новые</Nav.Link>
                       <Nav.Link as={Link} to="/">Письмо-приглашение</Nav.Link>
                       <Nav.Link as={Link} to="/">Звонок-скрининг</Nav.Link>
                       <Nav.Link as={Link} to="/">Видеоинтервью</Nav.Link>
