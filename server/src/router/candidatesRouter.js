@@ -15,13 +15,21 @@ candidatesRouter.route('/')
     res.json(candidates);
   })
   .post(verifyAccessToken, async (req, res) => {
+    const newPost = await Canditate.create({ ...req.body, userId: res.locals.user.id });
+    const candidate = await Canditate.findByPk(newPost.id, { include: [Stage] });
+    res.json(candidate);
+  })
+  candidatesRouter.route('/:id').put(verifyAccessToken, async (req, res) => {
     try {
-      const newPost = await Canditate.create({ ...req.body, userId: res.locals.user.id });
-      const candidate = await Canditate.findByPk(newPost.id, { include: [Stage] });
-      res.json(candidate);
+        const candidate = await Canditate.findByPk(req.params.id);
+
+        await candidate.update(req.body);
+        res.json(candidate);
     } catch (error) {
-      console.log(error)
+        console.error('Ошибка при обновлении данных кандидата:', error);
+        res.status(500).json({ error: 'Ошибка сервера' });
     }
-  });
+});
+
 
 module.exports = candidatesRouter;
