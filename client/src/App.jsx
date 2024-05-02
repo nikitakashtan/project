@@ -9,6 +9,16 @@ import ProtectedRoute from './components/hoc/ProtectedRoute';
 import LoginPage from './components/pages/LoginPage';
 import Loader from './components/hoc/Loader';
 import NewCandidatePage from './components/pages/NewCandidatePage'
+import InvitationPage from './components/pages/ InvitationPage';
+import CallPage from './components/pages/CallPage';
+import VideoInteriew from './components/pages/VideoInterviewPage'
+import TransferredPage from './components/pages/TransferredPage'
+import InterviewPage from './components/pages/InterviewPage'
+import OfferPage from './components/pages/OfferPage'
+import JobPage from './components/pages/JobPage'
+import RefusalPage from './components/pages/RefusalPage'
+
+
 function App() {
   const [user, setUser] = useState();
 
@@ -48,6 +58,38 @@ function App() {
         {
           path: "/new",
           element: <NewCandidatePage />
+        },
+        {
+          path: "/invitation",
+          element: <InvitationPage />
+        },
+        {
+          path: "/call",
+          element: <CallPage />
+        },
+        {
+          path: "/video-interview",
+          element: <VideoInteriew />
+        },
+        {
+          path: "/transferred",
+          element: <TransferredPage />
+        },
+        {
+          path: "/interview",
+          element: <InterviewPage />
+        },
+        {
+          path: "/offer",
+          element: <OfferPage />
+        },
+        {
+          path: "/job",
+          element: <JobPage />
+        },
+        {
+          path: "/refusal",
+          element: <RefusalPage />
         },
         {
           path: "/new-candidate",
