@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import { Link } from 'react-router-dom';
 
 export default function NavBar() {
     return (
@@ -13,9 +14,9 @@ export default function NavBar() {
             <Navbar key={expand} expand={expand} className="bg-body-tertiary mb-3">
               <Container fluid>
                 <Navbar.Brand>HH</Navbar.Brand>
-                <Nav.Link to="/">Добавить кандидата</Nav.Link>
-                <Nav.Link to="/">Войти</Nav.Link>
-                <Nav.Link to="/">Выйти</Nav.Link>
+                <Nav.Link as={Link} to="/new-candidate">Добавить кандидата</Nav.Link>
+                <Nav.Link as={Link} to="/">Войти</Nav.Link>
+                <Nav.Link as={Link} to="/">Выйти</Nav.Link>
                 <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
                 <Navbar.Offcanvas
                   id={`offcanvasNavbar-expand-${expand}`}

@@ -3,10 +3,10 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 export default function NewCandidate() {
-  const [stages, setStages] = useState([]);
-  useEffect(() => {
-    axios()
-  })
+  // const [stages, setStages] = useState([]);
+  // useEffect(() => {
+  //   axios()
+  // })
 
   return (
     <Form className='w-50 p-3' style={{ margin: '0 auto', position: 'relative' }}>
