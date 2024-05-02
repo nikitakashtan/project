@@ -8,6 +8,7 @@ import axiosInstance, { setAccessToken} from '../src/axiosInstance';
 import ProtectedRoute from './components/hoc/ProtectedRoute';
 import LoginPage from './components/pages/LoginPage';
 import Loader from './components/hoc/Loader';
+import NewCandidatePage from './components/pages/NewCandidatePage'
 function App() {
   const [user, setUser] = useState();
 
@@ -43,6 +44,10 @@ function App() {
         {
           path: "/",
           element: <MainPage />
+        },
+        {
+          path: "/new",
+          element: <NewCandidatePage />
         },
         {
           path: "/new-candidate",

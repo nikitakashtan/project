@@ -37,26 +37,24 @@ export default function NavBar({ user, logoutHandler }) {
                 <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
                     Этапы собеседования
                     </Offcanvas.Title>
-                    </Offcanvas.Header>
-                    <Offcanvas.Body>
-                        <Nav className="justify-content-end flex-grow-1 pe-3">
-                            <Nav.Link as={Link} to="/" className={location.pathname === '/' ? 'text-dark fw-bold' : 'text-dark'}>Новые</Nav.Link>
-                            <Nav.Link as={Link} to="/">Письмо-приглашение</Nav.Link>
-                            <Nav.Link as={Link} to="/">Звонок-скрининг</Nav.Link>
-                            <Nav.Link as={Link} to="/">Видеоинтервью</Nav.Link>
-                            <Nav.Link as={Link} to="/">Передано заказчику</Nav.Link>
-                            <Nav.Link as={Link} to="/">Интервью с заказчиком</Nav.Link>
-                            <Nav.Link as={Link} to="/">Выставлен оффер</Nav.Link>
-                            <Nav.Link as={Link} to="/">Вышел на работу</Nav.Link>
-                            <Nav.Link as={Link} to="/">Отказ</Nav.Link>
-                          </Nav>
-                        </Offcanvas.Body>
-                      </Navbar.Offcanvas>
-                    </Container>
-                  </Navbar>
-                )
-            )
-          }
+                  </Offcanvas.Header>
+                  <Offcanvas.Body>
+                    <Nav className="justify-content-end flex-grow-1 pe-3">
+                      <Nav.Link as={Link} to="/new"  className={location.pathname === '/' ? 'text-dark fw-bold' : 'text-dark'}>Новые</Nav.Link>
+                      <Nav.Link as={Link} to="/">Письмо-приглашение</Nav.Link>
+                      <Nav.Link as={Link} to="/">Звонок-скрининг</Nav.Link>
+                      <Nav.Link as={Link} to="/">Видеоинтервью</Nav.Link>
+                      <Nav.Link as={Link} to="/">Передано заказчику</Nav.Link>
+                      <Nav.Link as={Link} to="/">Интервью с заказчиком</Nav.Link>
+                      <Nav.Link as={Link} to="/">Выставлен оффер</Nav.Link>
+                      <Nav.Link as={Link} to="/">Вышел на работу</Nav.Link>
+                      <Nav.Link as={Link} to="/">Отказ</Nav.Link>
+                    </Nav>
+                  </Offcanvas.Body>
+                </Navbar.Offcanvas>
+              </Container>
+            </Navbar>
+          ))}
         </>
     );
 }
