@@ -15,9 +15,13 @@ candidatesRouter.route('/')
     res.json(candidates);
   })
   .post(verifyAccessToken, async (req, res) => {
-    const newPost = await Canditate.create({ ...req.body, userId: res.locals.user.id });
-    const candidate = await Canditate.findByPk(newPost.id, { include: [Stage] });
-    res.json(candidate);
+    try {
+      const newPost = await Canditate.create({ ...req.body, userId: res.locals.user.id });
+      const candidate = await Canditate.findByPk(newPost.id, { include: [Stage] });
+      res.json(candidate);
+    } catch (error) {
+      console.log(error)
+    }
   });
 
 module.exports = candidatesRouter;

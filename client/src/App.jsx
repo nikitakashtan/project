@@ -2,7 +2,7 @@ import React from 'react'
 import MainPage from "./components/pages/MainPage"
 import Layout from './Layout';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import NewCandidate from './components/pages/NewCandidate';
+import AddCandidate from './components/pages/AddCandidate';
 import { useState, useEffect } from 'react';
 import axiosInstance, { setAccessToken} from '../src/axiosInstance';
 import ProtectedRoute from './components/hoc/ProtectedRoute';
@@ -46,7 +46,7 @@ function App() {
         },
         {
           path: "/new-candidate",
-          element: <NewCandidate />
+          element: <AddCandidate />
         },
         {
           element: <ProtectedRoute isAllowed={!user} />,
