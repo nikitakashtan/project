@@ -1,6 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-const { User } = require('../models');
+const {User} = require ('../../db/models');
 const generateTokens = require('../utils/generateTokens');
 const cookiesConfig = require('../configs/cookiesConfig');
 
