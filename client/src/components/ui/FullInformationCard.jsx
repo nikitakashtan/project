@@ -71,7 +71,7 @@ export default function FullInformationCard({ candidate, updateCandidate, user }
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 0.3 }}
         >
-            <Card className="bg-dark text-white mb-5" style={{ width: '700px', height: '300px' }}>
+            <Card className="bg-dark text-white mb-5" style={{ width: '700px', height: '400px' }}>
                 <Card.Img src="https://catherineasquithgallery.com/uploads/posts/2021-02/1614408020_23-p-biznes-fon-temnii-31.jpg" alt="Card image" style={{ height: '100%', objectFit: 'cover' }} />
                 <Card.ImgOverlay>
                     <Card.Title>Имя: {editing ? <input type="text" name="name" value={updatedCandidate.name || ''} onChange={handleInputChange} /> : candidate.name}</Card.Title>

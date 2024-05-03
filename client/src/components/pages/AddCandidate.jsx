@@ -8,11 +8,13 @@ export default function AddCandidate() {
     name: '',
     email: '',
     experience: '',
-    phone: ''
+    phone: '',
+    hh: ''
   })
   const [candidates, setCandidates] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadMessage, setLoadMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const newCandidateHandler = async (e) => {
     try {
@@ -39,36 +41,48 @@ export default function AddCandidate() {
       throw error;
     }
   }
-
-  const submitHandler = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      await newCandidateHandler(e);
-      await mailHandler();
-      setUserData({
-        name: '',
-        email: '',
-        experience: '',
-        phone: '',
-      });
-      setLoadMessage('Приглашение успешно отправлено');
-    } catch (error) {
-      setLoadMessage('Произошла ошибка');
-    } finally {
-      setLoading(false);
-      setTimeout(() => {
-        setLoadMessage('');
-      }, 8000);
-    }
-  }
-
+ 
   const userDataHandler = (e) => {
+    if (e.target.name === 'experience') {
+      if (!/^\d+$/.test(e.target.value)) {
+        setErrorMessage('Пожалуйста, введите число');
+      } else if (parseInt(e.target.value) < 1 || parseInt(e.target.value) > 60) {
+        setErrorMessage('Число должно быть от 1 до 60')
+      } else {
+        setErrorMessage('');
+      }
+    }
     setUserData({
       ...userData,
       [e.target.name]: e.target.value
     });
   };
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    if (!errorMessage) {
+      setLoading(true);
+      try {
+        await newCandidateHandler(e);
+        await mailHandler();
+        setUserData({
+          name: '',
+          email: '',
+          experience: '',
+          phone: '',
+          hh: '',
+        });
+        setLoadMessage('Приглашение успешно отправлено');
+      } catch (error) {
+        setLoadMessage('Произошла ошибка');
+      } finally {
+        setLoading(false);
+        setTimeout(() => {
+          setLoadMessage('');
+        }, 8000);
+      }
+    }
+  }
 
   return (
     <>    
@@ -85,10 +99,15 @@ export default function AddCandidate() {
           <Form.Group className="mb-3" controlId="formBasicExperience">
             <Form.Label>Стаж работы</Form.Label>
             <Form.Control type="text" name="experience" value={userData.experience} onChange={userDataHandler} placeholder="Введите стаж работы" required />
+            {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicPhone">
             <Form.Label>Номер телефона</Form.Label>
             <Form.Control type="tel" name="phone" value={userData.phone} onChange={userDataHandler} placeholder="Введите номер телефона" required />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicHh">
+            <Form.Label>Ссылка на профиль</Form.Label>
+            <Form.Control type="text" name="hh" value={userData.hh} onChange={userDataHandler} placeholder="Ссылка на профиль в hh.ru" required />
           </Form.Group>
 
           <Button variant="dark" type="submit" style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
