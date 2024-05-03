@@ -20,7 +20,7 @@ mailRouter.route('/')
     });
 
     const mailOptions = {
-        from: 'bennhil@yandex.ru',
+        from: process.env.EMAIL,
         to: email,
         subject: 'Приглашение на собеседование',
         text: `Здравствуйте, ${name}. \n\nВы были приглашены на собеседование. Ожидаем скорой встречи с вами.\n\nС уважением,\nHuntFlow`
