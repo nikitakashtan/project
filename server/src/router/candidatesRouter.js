@@ -11,7 +11,7 @@ candidatesRouter.route('/')
         model: Stage,
       },
     });
-    console.log(candidates)
+    // console.log(candidates)
     res.json(candidates);
   })
   .post(verifyAccessToken, async (req, res) => {

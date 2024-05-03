@@ -3,14 +3,20 @@ import { Col, Row } from 'react-bootstrap';
 import OneCandidatePage from '../ui/OneCandidatePage';
 import axiosInstance from '../../axiosInstance';
 
-export default function NewCandidatePage() {
+export default function NewCandidatePage({user}) {
   const [candidates, setCandidates] = useState([]);
   
   useEffect(() => {
+    fetchData();
+    document.addEventListener('candidate-updated', fetchData);
+  }, []);
+  
+  const fetchData = () => {
     axiosInstance('/candidates').then((res) => {
       setCandidates(res.data);
+      
     });
-  }, []);
+  };
 
 
 
@@ -21,7 +27,7 @@ export default function NewCandidatePage() {
           return (
             <Row key={candidate.id}>
               <Col xs={12}>
-                <OneCandidatePage candidate={candidate} />
+                <OneCandidatePage candidate={candidate} user={user}/>
               </Col>
             </Row>
           );
