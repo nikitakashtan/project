@@ -9,5 +9,6 @@ export default function Layout({ user, logoutHandler }) {
           <NavBar user={user} logoutHandler={logoutHandler}/>
             <Outlet />
     </Container>
+    
   );
 }

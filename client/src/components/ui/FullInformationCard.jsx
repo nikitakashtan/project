@@ -20,14 +20,6 @@ export default function FullInformationCard({ candidate, updateCandidate, user }
             });
     }, []);
 
-    async function updateStage(stageId) {
-        try {
-            const response = await axiosInstance.get(`/stages/${stageId}`);
-            return response.data;
-        } catch (error) {
-            console.error('Ошибка при обновлении этапа собеседования:', error);
-        }
-    }
 
     const handleEditClick = () => {
         setEditing(true);
