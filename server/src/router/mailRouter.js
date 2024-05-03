@@ -1,7 +1,6 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
-// const { User } = require('../../db/models')
 
 const mailRouter = express.Router();
 
@@ -20,7 +19,7 @@ mailRouter.route('/')
     });
 
     const mailOptions = {
-        from: process.env.EMAIL,
+        from: `"HuntFlow" <${process.env.EMAIL}>`,
         to: email,
         subject: 'Приглашение на собеседование',
         text: `Здравствуйте, ${name}. \n\nВы были приглашены на собеседование. Ожидаем скорой встречи с вами.\n\nС уважением,\nHuntFlow`
