@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axiosInstance from '../../axiosInstance';
+import Container from 'react-bootstrap/Container';
 
 export default function AddCandidate({setNeedUpdate}) {
   const cardRef = React.useRef(null);
@@ -74,6 +75,7 @@ export default function AddCandidate({setNeedUpdate}) {
 
   return (
     <>    
+    
       <Form className='w-50 p-3' onSubmit={submitHandler} style={{ margin: '0 auto', position: 'relative' }}>
         <fieldset disabled={loading}>
           <Form.Group className="mb-3" controlId="formBasicName">
@@ -93,12 +95,13 @@ export default function AddCandidate({setNeedUpdate}) {
             <Form.Control type="tel" name="phone" value={userData.phone} onChange={userDataHandler} placeholder="Введите номер телефона" required />
           </Form.Group>
 
-          <Button variant="dark" type="submit" style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
+          <Button variant="dark" type="submit" className="d-block mx-auto" style={{ width: '200px'}}>
             {loading ? 'Загрузка...' : 'Добавить кандидата'}
-          </Button>
+            </Button>
         </fieldset>
       </Form>
       {loadMessage && <p className='mb-0' style={{ textAlign: 'center', marginTop: '32px', color: loadMessage.includes('отправлено') ? 'green' : 'red' }}>{loadMessage}</p>}
+      
     </>
   )
 }

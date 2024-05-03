@@ -9,16 +9,20 @@ import axiosInstance from '../../axiosInstance';
 import '../../../src/style.css';
 
 export default function NavBar({ user, logoutHandler, needUpdate, setNeedUpdate }) {
+export default function NavBar({ user, logoutHandler, needUpdate, setNeedUpdate }) {
   const location = useLocation();
   const [candidates, setCandidates] = useState([]);
   const [candidateCounts, setCandidateCounts] = useState({});
 
-  // useEffect(() => {
-  //   fetchData();
-  //   document.addEventListener('candidate-updated', fetchData);
-  // }, [needUpdate]);
 
   useEffect(() => {
+    document.addEventListener('candidate-updated', fetchData);
+    if (needUpdate) {
+      fetchData()
+      setNeedUpdate(false)
+    }
+  }, [needUpdate]);
+  
     document.addEventListener('candidate-updated', fetchData);
     if (needUpdate) {
       fetchData()
@@ -32,6 +36,7 @@ export default function NavBar({ user, logoutHandler, needUpdate, setNeedUpdate 
       updateCandidateCounts(res.data);
     });
   };
+
 
   const updateCandidateCounts = (candidates) => {
     const counts = {
@@ -47,17 +52,8 @@ export default function NavBar({ user, logoutHandler, needUpdate, setNeedUpdate 
     };
     setCandidateCounts(counts);
   };
-  // const stage1 = candidates.filter((candidate) => candidate.Stage.name === 'Новые').length;
-  // const a = candidates.length;
-  // const stage2 = candidates.filter((candidate) => candidate.Stage.name === 'Отправлено письмо-приглашение').length;
-  // const stage3 = candidates.filter((candidate) => candidate.Stage.name === 'Назначен звонок-скрининг').length;
-  // const stage4 = candidates.filter((candidate) => candidate.Stage.name === 'Назначено видеоинтервью').length;
-  // const stage5 = candidates.filter((candidate) => candidate.Stage.name === 'Передано заказчику').length;
-  // const stage6 = candidates.filter((candidate) => candidate.Stage.name === 'Назначено интервью с заказчиком').length;
-  // const stage7 = candidates.filter((candidate) => candidate.Stage.name === 'Выставлен оффер').length;
-  // const stage8 = candidates.filter((candidate) => candidate.Stage.name === 'Принял оффер и вышел на работу').length;
-  // const stage9 = candidates.filter((candidate) => candidate.Stage.name === 'Отказ').length;
   
+
     return (
     <>
     {[false].map((expand) => (
@@ -73,9 +69,13 @@ export default function NavBar({ user, logoutHandler, needUpdate, setNeedUpdate 
             <>
             <Nav.Link className='text-white' as={Link} to="/new-candidate">Добавить кандидата</Nav.Link>
             <Nav.Link as={Link} onClick={logoutHandler} className="border border-wite rounded-3 px-2 py-1 text-white">Выйти</Nav.Link>
-            <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
+            <Navbar.Toggle 
+            style={{ backgroundСolor: "white"}}
+            className="border border-wite rounded-3 px-2 py-1 text-white color-white" 
+            aria-controls={`offcanvasNavbar-expand-${expand}`} 
+/>
         <Navbar.Offcanvas
-         style={{backgroundColor: 'rgba(0, 0, 0, 0.75)'}}
+         style={{backgroundColor: 'rgba(0, 0, 0, 0.90)'}}
         id={`offcanvasNavbar-expand-${expand}`}
         aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
         placement="end"

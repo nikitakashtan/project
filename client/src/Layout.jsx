@@ -9,5 +9,6 @@ export default function Layout({ user, logoutHandler, needUpdate, setNeedUpdate 
           <NavBar user={user} logoutHandler={logoutHandler} needUpdate={needUpdate} setNeedUpdate={setNeedUpdate}/>
             <Outlet />
     </Container>
+    
   );
 }
