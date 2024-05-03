@@ -1,31 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 import axiosInstance from '../../axiosInstance';
 
-export default function FullInformationCard({ candidate }) {
+export default function FullInformationCard({ candidate, updateCandidate, user }) {
     const [editing, setEditing] = useState(false);
-    const [updatedCandidate, setUpdatedCandidate] = useState({});
-    const [currentCandidate, setCurrentCandidate] = useState(candidate); 
+    const [updatedCandidate, setUpdatedCandidate] = useState(candidate);
+    const [stages, setStages] = useState([]);
 
-    const cardStyle = {
-        marginBottom: '20px',
-        marginTop: '20px',
-        height: '300px',
-        width: '700px'
-    };
+    useEffect(() => {
+        axiosInstance.get('/stages')
+            .then(response => {
+                setStages(response.data);
+            })
+            .catch(error => {
+                console.error('Ошибка при загрузке этапов с сервера:', error);
+            });
+    }, []);
 
-    const imageStyle = {
-        height: '100%', 
-        objectFit: 'cover' 
-    };
-
-    const buttonStyle = {
-        position: 'absolute',
-        bottom: '20px',
-        right: '20px' 
-    };
+    async function updateStage(stageId) {
+        try {
+            const response = await axiosInstance.get(`/stages/${stageId}`);
+            return response.data;
+        } catch (error) {
+            console.error('Ошибка при обновлении этапа собеседования:', error);
+        }
+    }
 
     const handleEditClick = () => {
         setEditing(true);
@@ -37,18 +39,28 @@ export default function FullInformationCard({ candidate }) {
             for (const key in updatedCandidate) {
                 formData.append(key, updatedCandidate[key]);
             }
-            await axiosInstance.put(`/candidates/${currentCandidate.id}`, formData); 
-            setCurrentCandidate(updatedCandidate);
+            const response = await axiosInstance.put(`/candidates/${candidate.id}`, formData);
+            setUpdatedCandidate(response.data);
+            const updatedStage = stages.find(stage => stage.id === response.data.stage_id);
+            setUpdatedCandidate(prevState => ({
+               ...prevState,
+                stage_name: updatedStage ? updatedStage.name : '',
+                stage_id: response.data.stage_id 
+            }));
+    
+            updateCandidate(response.data);
+    
             setEditing(false);
         } catch (error) {
             console.error('Ошибка при сохранении данных:', error);
         }
     };
-
+    
     const handleInputChange = (e) => {
+        const { name, value } = e.target;
         setUpdatedCandidate({
             ...updatedCandidate,
-            [e.target.name]: e.target.value
+            [name]: value
         });
     };
 
@@ -59,19 +71,26 @@ export default function FullInformationCard({ candidate }) {
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 0.3 }}
         >
-            <Card style={cardStyle} className="bg-dark text-white">
-                <Card.Img src="https://catherineasquithgallery.com/uploads/posts/2021-02/1614408020_23-p-biznes-fon-temnii-31.jpg" alt="Card image" style={imageStyle}/>
+            <Card className="bg-dark text-white mb-5" style={{ width: '700px', height: '300px' }}>
+                <Card.Img src="https://catherineasquithgallery.com/uploads/posts/2021-02/1614408020_23-p-biznes-fon-temnii-31.jpg" alt="Card image" style={{ height: '100%', objectFit: 'cover' }} />
                 <Card.ImgOverlay>
-                    <Card.Title>Имя: {editing ? <input type="text" name="name" value={updatedCandidate.name || currentCandidate.name} onChange={handleInputChange} /> : currentCandidate.name}</Card.Title>
-                    <Card.Text>Email: {editing ? <input type="text" name="email" value={updatedCandidate.email || currentCandidate.email} onChange={handleInputChange} /> : currentCandidate.email}</Card.Text>
-                    <Card.Text>Телефон: {editing ? <input type="text" name="phone" value={updatedCandidate.phone || currentCandidate.phone} onChange={handleInputChange} /> : currentCandidate.phone}</Card.Text>
-                    <Card.Text>Ссылка на Zoom: {editing ? <input type="text" name="zoom" value={updatedCandidate.zoom || currentCandidate.zoom} onChange={handleInputChange} /> : (currentCandidate.zoom !== null ? currentCandidate.zoom : "Нет")}</Card.Text>
-                    <Card.Text>Ссылка на Skype: {editing ? <input type="text" name="skype" value={updatedCandidate.skype || currentCandidate.skype} onChange={handleInputChange} /> : (currentCandidate.skype !== null ? currentCandidate.skype : "Нет")}</Card.Text>
-                    <Card.Text>Ссылка на HeadHunter: {editing ? <input type="text" name="hh" value={updatedCandidate.hh || currentCandidate.hh} onChange={handleInputChange} /> : (currentCandidate.hh !== null ? currentCandidate.hh : "Нет")}</Card.Text>
-                    <Card.Text>
-    Этап собеседования: {editing ? <input type="text" name="stage" value={updatedCandidate.stage?.name || ''} onChange={handleInputChange} /> : (currentCandidate.Stage ? currentCandidate.Stage.name : '')}
-</Card.Text>
-                    <Button variant="outline-success" style={buttonStyle} onClick={editing ? handleSaveClick : handleEditClick}>{editing ? 'Сохранить' : 'Изменить информацию'}</Button>
+                    <Card.Title>Имя: {editing ? <input type="text" name="name" value={updatedCandidate.name || ''} onChange={handleInputChange} /> : candidate.name}</Card.Title>
+                    <Card.Text>Email: {editing ? <input type="text" name="email" value={updatedCandidate.email || ''} onChange={handleInputChange} /> : candidate.email}</Card.Text>
+                    <Card.Text>Телефон: {editing ? <input type="text" name="phone" value={updatedCandidate.phone || ''} onChange={handleInputChange} /> : candidate.phone}</Card.Text>
+                    <Card.Text>Ссылка на Zoom: {editing ? <input type="text" name="zoom" value={updatedCandidate.zoom || ''} onChange={handleInputChange} /> : (updatedCandidate.zoom !== null && updatedCandidate.zoom !== '' ? updatedCandidate.zoom : "Нет" )}</Card.Text>
+                    <Card.Text>Ссылка на Skype: {editing ? <input type="text" name="skype" value={updatedCandidate.skype || ''} onChange={handleInputChange} /> : (updatedCandidate.skype !== null && updatedCandidate.skype !== '' ? updatedCandidate.skype : "Нет")}</Card.Text>
+                    <Card.Text>Ссылка на HeadHunter: {editing ? <input type="text" name="hh" value={updatedCandidate.hh || ''} onChange={handleInputChange} /> : (updatedCandidate.hh !== null && updatedCandidate.hh !== '' ? updatedCandidate.hh : "Нет")}</Card.Text>
+
+                    <Card.Text>Этап собеседования: {editing ?
+                        <Form.Select name="stage_id" value={updatedCandidate.stage_id || ''} onChange={handleInputChange} style={{ cursor: 'pointer' }}>
+                            <option disabled>Выберите этап подбора</option>
+                            {stages.map(stage => (
+                                <option key={stage.id} value={stage.id}>{stage.name}</option>
+                            ))}
+                        </Form.Select>
+                        : stages.find(stage => stage.id === updatedCandidate.stage_id)?.name || ''}
+                    </Card.Text>
+                    {user && <Button variant="outline-success" style={{ position: 'absolute', bottom: '20px', right: '20px' }} onClick={editing ? handleSaveClick : handleEditClick}>{editing ? 'Сохранить' : 'Изменить информацию'}</Button>}
                 </Card.ImgOverlay>
             </Card>
         </motion.div>

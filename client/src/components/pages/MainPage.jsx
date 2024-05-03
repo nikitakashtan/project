@@ -4,7 +4,7 @@ import OneCandidatePage from '../ui/OneCandidatePage';
 import axiosInstance from '../../axiosInstance';
 import FullInformationCard from '../ui/FullInformationCard';
 
-export default function HomePage() {
+export default function HomePage({user}) {
   const [candidates, setCandidates] = useState([]);
   useEffect(() => {
     axiosInstance('/candidates').then((res) => {
@@ -16,7 +16,7 @@ export default function HomePage() {
     <Row>
       {candidates.map((candidate) => (
           <Row>
-              <OneCandidatePage candidate={candidate} />
+              <OneCandidatePage candidate={candidate} user={user} />
           </Row>
       ))}
     </Row>

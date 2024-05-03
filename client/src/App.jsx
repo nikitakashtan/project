@@ -53,7 +53,7 @@ function App() {
       children: [
         {
           path: "/",
-          element: <MainPage />
+          element: <MainPage user={user} />
         },
         {
           path: "/new",
