@@ -3,7 +3,8 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axiosInstance from '../../axiosInstance';
 
-export default function AddCandidate() {
+export default function AddCandidate({setNeedUpdate}) {
+  const cardRef = React.useRef(null);
   const [userData, setUserData] = useState({
     name: '',
     email: '',
@@ -21,6 +22,7 @@ export default function AddCandidate() {
       const res = await axiosInstance.post('/candidates', formData);
       if (res.status === 200) {
         setCandidates((prev) => [res.data, ...prev]);
+        setNeedUpdate(true)
       } else {
         throw new Error('Произошла ошибка при добавлении кандидата')
       }

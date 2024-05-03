@@ -8,15 +8,24 @@ import Badge from 'react-bootstrap/Badge';
 import axiosInstance from '../../axiosInstance';
 import '../../../src/style.css';
 
-export default function NavBar({ user, logoutHandler }) {
+export default function NavBar({ user, logoutHandler, needUpdate, setNeedUpdate }) {
   const location = useLocation();
   const [candidates, setCandidates] = useState([]);
   const [candidateCounts, setCandidateCounts] = useState({});
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   fetchData();
+  //   document.addEventListener('candidate-updated', fetchData);
+  // }, [needUpdate]);
 
+  useEffect(() => {
+    document.addEventListener('candidate-updated', fetchData);
+    if (needUpdate) {
+      fetchData()
+      setNeedUpdate(false)
+    }
+  }, [needUpdate]);
+  
   const fetchData = () => {
     axiosInstance('/candidates').then((res) => {
       setCandidates(res.data);

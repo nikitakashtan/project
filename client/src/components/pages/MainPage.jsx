@@ -8,7 +8,8 @@ export default function HomePage({user}) {
   const [candidates, setCandidates] = useState([]);
   useEffect(() => {
     axiosInstance('/candidates').then((res) => {
-      setCandidates(res.data);
+      const sortedCandidates = res.data.sort((a, b) => b.id - a.id);
+      setCandidates(sortedCandidates);
     });
   }, []);
 

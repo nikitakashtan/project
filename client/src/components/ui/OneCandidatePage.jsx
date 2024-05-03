@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion'; 
 import Card from 'react-bootstrap/Card';
@@ -15,8 +16,7 @@ export default function OneCandidatePage({ candidate, user }) {
   const cardStyle = {
     width: '25rem',
     marginBottom: '20px',
-    marginTop: '20px',
-    height: '400px',
+    height: '450px',
     position: 'relative',
     flex: '1 1 auto',
   };
@@ -37,6 +37,33 @@ export default function OneCandidatePage({ candidate, user }) {
     lineHeight: '1.5',
     color: '#333',
     marginBottom: '10px',
+  };
+
+  const formGroupStyle = {
+    marginBottom: '20px',
+    display: 'flex',
+    alignItems: 'center',
+  };
+
+  const formControlStyle = {
+    height: '50px',
+    width: '250px',
+    marginRight: '10px',
+  };
+
+  const formButtonStyle = {
+    height: '50px',
+    width: '110px',
+    backgroundColor: '#5a5a5a',
+    border: 'none',
+    color: '#ffffff',
+    borderRadius: '5px',
+    cursor: 'pointer',
+  };
+
+  const commentStyle = {
+    background: '#e9e9e9',
+    borderRadius: '5px',
   };
 
   const handleToggleFullInfo = () => {
@@ -67,32 +94,33 @@ export default function OneCandidatePage({ candidate, user }) {
 
   return (
     <div style={{ display: 'flex' }}>
-      <div style={{ flex: '1', paddingRight: showFullInfo ? '10px' : '0' }}>
+      <div style={{ flex: '1', paddingRight: showFullInfo? '10px' : '0' }}>
         <Card style={cardStyle}>
           <Card.Body>
             <Card.Title style={{ marginBottom: '20px' }}>{currentCandidate.name}</Card.Title>
-            <Card.Text style={textStyle}>Email: {currentCandidate.email}</Card.Text>
-            <Card.Text style={textStyle}>Телефон: {currentCandidate.phone}</Card.Text>
-            <Card.Text style={textStyle}>Опыт работы: {currentCandidate.experience}</Card.Text>
+            <Card.Text style={textStyle}><strong>Email:</strong>  {currentCandidate.email}</Card.Text>
+            <Card.Text style={textStyle}><strong>Телефон:</strong>  {currentCandidate.phone}</Card.Text>
+            <Card.Text style={textStyle}><strong>Опыт работы:</strong> {currentCandidate.experience}</Card.Text>
            
             <Card.Title style={{ marginBottom: '20px' }}>Комментарии</Card.Title>
-            {comments.map((comment) => (
-              <div key={comment.id}>
-                <Card.Text style={textStyle}>{comment.name}</Card.Text>
+            {comments.map((comment, index) => (
+              <div key={comment.id} style={commentStyle}>
+                <p style={textStyle}>{index + 1}. <strong>{comment.name}</strong></p>
               </div>
             ))}
 
             {user && (
-              <Form.Group controlId="commentForm">
+              <Form.Group controlId="commentForm" style={formGroupStyle}>
                 <Form.Control
                   as="textarea"
                   rows={3}
                   placeholder="Введите ваш комментарий"
                   value={commentText}
                   onChange={handleCommentChange}
+                  style={formControlStyle}
                 />
-                <Button variant="dark" style={{ marginTop: '10px' }} onClick={handleSubmitComment}>
-                  Добавить комментарий
+                <Button variant="dark" style={formButtonStyle} onClick={handleSubmitComment}>
+                  Отправить
                 </Button>
               </Form.Group>
             )}
@@ -102,7 +130,7 @@ export default function OneCandidatePage({ candidate, user }) {
               style={buttonStyle} 
               onClick={handleToggleFullInfo}
             >
-              {showFullInfo ? "Скрыть информацию" : "Подробная информация"}
+              {showFullInfo? "Скрыть информацию" : "Подробная информация"}
             </Button>
           </Card.Body>
         </Card>
