@@ -9,12 +9,20 @@ import axiosInstance from '../../axiosInstance';
 import '../../../src/style.css';
 
 export default function NavBar({ user, logoutHandler, needUpdate, setNeedUpdate }) {
+export default function NavBar({ user, logoutHandler, needUpdate, setNeedUpdate }) {
   const location = useLocation();
   const [candidates, setCandidates] = useState([]);
   const [candidateCounts, setCandidateCounts] = useState({});
 
 
   useEffect(() => {
+    document.addEventListener('candidate-updated', fetchData);
+    if (needUpdate) {
+      fetchData()
+      setNeedUpdate(false)
+    }
+  }, [needUpdate]);
+  
     document.addEventListener('candidate-updated', fetchData);
     if (needUpdate) {
       fetchData()
