@@ -7,7 +7,7 @@ import axiosInstance from '../../axiosInstance';
 export default function FullInformationCard({ candidate }) {
     const [editing, setEditing] = useState(false);
     const [updatedCandidate, setUpdatedCandidate] = useState({});
-    const [currentCandidate, setCurrentCandidate] = useState(candidate); // Новое состояние для основного кандидата
+    const [currentCandidate, setCurrentCandidate] = useState(candidate); 
 
     const cardStyle = {
         marginBottom: '20px',
@@ -37,13 +37,11 @@ export default function FullInformationCard({ candidate }) {
             for (const key in updatedCandidate) {
                 formData.append(key, updatedCandidate[key]);
             }
-            await axiosInstance.put(`/candidates/${currentCandidate.id}`, formData); // Используем текущего кандидата для отправки запроса
-            // Обновляем основного кандидата
+            await axiosInstance.put(`/candidates/${currentCandidate.id}`, formData); 
             setCurrentCandidate(updatedCandidate);
             setEditing(false);
         } catch (error) {
             console.error('Ошибка при сохранении данных:', error);
-            // Обработка ошибки сохранения данных
         }
     };
 
