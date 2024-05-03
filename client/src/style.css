@@ -1,0 +1,32 @@
+body {
+    background-color: #2b2e32; 
+    color: #ffffff;
+}
+
+.container {
+    background-color: rgba(43, 46, 50, 0.11); 
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+}
+
+.card {
+    background-color: #ffffff;
+    color: #000000; 
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar {
+    background-color: #000000d8;
+    color: #ffffff;
+}
+
+.nav-link {
+    color: #ffffff; 
+}
+
+.nav-link:hover {
+    color: #cccccc; 
+}
+
