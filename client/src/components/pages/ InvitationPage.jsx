@@ -8,10 +8,16 @@ export default function  InvitationPage() {
     const [candidates, setCandidates] = useState([]);
   
     useEffect(() => {
+      fetchData();
+      document.addEventListener('candidate-updated', fetchData);
+    }, []);
+    
+    const fetchData = () => {
       axiosInstance('/candidates').then((res) => {
         setCandidates(res.data);
+        
       });
-    }, []);
+    };
   
   
   
@@ -22,7 +28,7 @@ export default function  InvitationPage() {
             return (
               <Row key={candidate.id}>
                 <Col xs={12}>
-                  <OneCandidatePage candidate={candidate} />
+                  <OneCandidatePage candidate={candidate} user={user}/>
                 </Col>
               </Row>
             );

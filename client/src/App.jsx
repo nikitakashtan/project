@@ -21,7 +21,8 @@ import RefusalPage from './components/pages/RefusalPage'
 
 function App() {
   const [user, setUser] = useState();
-
+  const [needUpdate, setNeedUpdate] = useState(true)
+console.log({user})
   useEffect(() => {
     axiosInstance('/tokens/refresh').then((res) => {
       const { user: newUser, accessToken } = res.data;
@@ -49,7 +50,7 @@ function App() {
 
   const routers = ([
     {
-      element: <Layout user={user} logoutHandler={logoutHandler} />,
+      element: <Layout user={user} logoutHandler={logoutHandler} needUpdate={needUpdate} setNeedUpdate={setNeedUpdate} />,
       children: [
         {
           path: "/",
@@ -57,43 +58,43 @@ function App() {
         },
         {
           path: "/new",
-          element: <NewCandidatePage />
+          element: <NewCandidatePage user={user}/>
         },
         {
           path: "/invitation",
-          element: <InvitationPage />
+          element: <InvitationPage user={user}/>
         },
         {
           path: "/call",
-          element: <CallPage />
+          element: <CallPage user={user}/>
         },
         {
           path: "/video-interview",
-          element: <VideoInteriew />
+          element: <VideoInteriew user={user}/>
         },
         {
           path: "/transferred",
-          element: <TransferredPage />
+          element: <TransferredPage user={user}/>
         },
         {
           path: "/interview",
-          element: <InterviewPage />
+          element: <InterviewPage user={user}/>
         },
         {
           path: "/offer",
-          element: <OfferPage />
+          element: <OfferPage user={user}/>
         },
         {
           path: "/job",
-          element: <JobPage />
+          element: <JobPage user={user}/>
         },
         {
           path: "/refusal",
-          element: <RefusalPage />
+          element: <RefusalPage user={user}/>
         },
         {
           path: "/new-candidate",
-          element: <AddCandidate />
+          element: <AddCandidate setNeedUpdate={setNeedUpdate} />
         },
         {
           element: <ProtectedRoute isAllowed={!user} />,

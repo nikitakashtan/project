@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axiosInstance from '../../axiosInstance';
+import Container from 'react-bootstrap/Container';
 
-export default function AddCandidate() {
+export default function AddCandidate({setNeedUpdate}) {
+  const cardRef = React.useRef(null);
   const [userData, setUserData] = useState({
     name: '',
     email: '',
@@ -23,6 +25,7 @@ export default function AddCandidate() {
       const res = await axiosInstance.post('/candidates', formData);
       if (res.status === 200) {
         setCandidates((prev) => [res.data, ...prev]);
+        setNeedUpdate(true)
       } else {
         throw new Error('Произошла ошибка при добавлении кандидата')
       }
@@ -86,6 +89,7 @@ export default function AddCandidate() {
 
   return (
     <>    
+    
       <Form className='w-50 p-3' onSubmit={submitHandler} style={{ margin: '0 auto', position: 'relative' }}>
         <fieldset disabled={loading}>
           <Form.Group className="mb-3" controlId="formBasicName">
@@ -110,12 +114,13 @@ export default function AddCandidate() {
             <Form.Control type="text" name="hh" value={userData.hh} onChange={userDataHandler} placeholder="Ссылка на профиль в hh.ru" required />
           </Form.Group>
 
-          <Button variant="dark" type="submit" style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
+          <Button variant="dark" type="submit" className="d-block mx-auto" style={{ width: '200px'}}>
             {loading ? 'Загрузка...' : 'Добавить кандидата'}
-          </Button>
+            </Button>
         </fieldset>
       </Form>
       {loadMessage && <p className='mb-0' style={{ textAlign: 'center', marginTop: '32px', color: loadMessage.includes('отправлено') ? 'green' : 'red' }}>{loadMessage}</p>}
+      
     </>
   )
 }

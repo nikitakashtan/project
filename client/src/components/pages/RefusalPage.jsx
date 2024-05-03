@@ -4,14 +4,20 @@ import OneCandidatePage from '../ui/OneCandidatePage';
 import axiosInstance from '../../axiosInstance';
 
 
-export default function RefusalPage() {
+export default function RefusalPage({user}) {
     const [candidates, setCandidates] = useState([]);
   
     useEffect(() => {
+      fetchData();
+      document.addEventListener('candidate-updated', fetchData);
+    }, []);
+    
+    const fetchData = () => {
       axiosInstance('/candidates').then((res) => {
         setCandidates(res.data);
+        
       });
-    }, []);
+    };
   
   
   
@@ -22,7 +28,7 @@ export default function RefusalPage() {
             return (
               <Row key={candidate.id}>
                 <Col xs={12}>
-                  <OneCandidatePage candidate={candidate} />
+                  <OneCandidatePage candidate={candidate} user={user}/>
                 </Col>
               </Row>
             );
